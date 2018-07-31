@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<BankRegistry>
+  <Bank Name="Bank" Active="1" BIC="bic">
+    <SwiftBICs Default="true">swiftBIC1</SwiftBICs>
+    <SwiftBICs Default="false">swiftBIC2</SwiftBICs>
+    <SwiftBICs Default="false">swiftBIC3</SwiftBICs>
+
+    <Country Code="RU">Russia</Country>
+  </Bank>
+
+  <Bank Name="Bank1" Active="1" BIC="bic1">
+    <SwiftBICs Default="true">swiftBIC4</SwiftBICs>
+    <SwiftBICs Default="false">swiftBIC5</SwiftBICs>
+    <SwiftBICs Default="false">swiftBIC6</SwiftBICs>
+
+    <Country Code="EN">Great Britain</Country>
+  </Bank>
+</BankRegistry>
