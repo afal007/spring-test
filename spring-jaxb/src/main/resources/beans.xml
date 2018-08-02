@@ -1,13 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation=
+        "http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
   <context:annotation-config/>
 
-  <bean class="me.afal.jaxb.LogAnnotationBeanPostProcessor"/>
+  <jpa:repositories base-package="me.afal.jaxb.bank.dao"/>
 
-  <bean id="bankRegistryParser" class="me.afal.jaxb.BankRegistryParser"/>
+  <!-- Infrastructure beans -->
+
+  <bean class="me.afal.jaxb.spring.bpp.LogAnnotationBeanPostProcessor"/>
+
+  <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="packagesToScan" value="me.afal.jaxb.bank.model"/>
+    <property name="jpaVendorAdapter">
+      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+    </property>
+    <property name="jpaProperties">
+      <props>
+        <prop key="hibernate.hbm2ddl.auto">create</prop>
+        <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
+    <property name="driverClassName" value="org.hsqldb.jdbc.JDBCDriver"/>
+    <property name="url" value="jdbc:hsqldb:hsql://localhost:9001"/>
+    <property name="username" value="SA"/>
+    <property name="password" value=""/>
+  </bean>
+
+  <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
+    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+  </bean>
+
+  <!-- Business-logic beans -->
+
+  <bean class="me.afal.jaxb.bank.parse.BankRegistryParser" id="bankRegistryParser"/>
+
+  <bean class="me.afal.jaxb.bank.BankLoader" id="bankLoader">
+    <property name="parser" ref="bankRegistryParser"/>
+    <property name="bankRepository" ref="bankRepository"/>
+  </bean>
 
 </beans>

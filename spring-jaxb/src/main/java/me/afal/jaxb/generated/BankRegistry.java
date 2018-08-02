@@ -105,7 +105,6 @@ public class BankRegistry {
         return this.bankList;
     }
 
-
     /**
      * <p>Java class for anonymous complex type.
      *

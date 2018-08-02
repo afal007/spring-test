@@ -1,6 +1,7 @@
-package me.afal.jaxb;
+package me.afal.jaxb.bank.parse;
 
 import java.io.InputStream;
+import java.util.Optional;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -10,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
+import me.afal.jaxb.Const;
+import me.afal.jaxb.spring.annotation.Log;
 import me.afal.jaxb.generated.BankRegistry;
 
 public class BankRegistryParser {
@@ -19,23 +22,32 @@ public class BankRegistryParser {
     @Log
     private static Logger LOG;
 
-    public BankRegistry getBankRegistry( String fileName ) {
+    public Optional<BankRegistry> getBankRegistry( String fileName ) {
         LOG.info( MARKER, "{}", fileName );
         try {
             JAXBContext  context          = JAXBContext.newInstance( BankRegistry.class );
             Unmarshaller unmarshaller     = context.createUnmarshaller();
             InputStream  resourceAsStream = BankRegistryParser.class.getResourceAsStream( fileName );
 
-            return (BankRegistry) unmarshaller.unmarshal( resourceAsStream );
+            return Optional.ofNullable( (BankRegistry) unmarshaller.unmarshal( resourceAsStream ) );
         } catch ( JAXBException e ) {
-            String err = unmarshalError( fileName );
+            String err = unmarshallerError( fileName );
+
             LOG.error( MARKER, err, e );
             throw new RuntimeException( err, e );
     }   }
 
-    public static final String UNMARSHAL_ERR = "Не удалось обработать документ";
+    public static final String UNMARSHALLER_ERR = "Не удалось обработать документ";
 
-    private String unmarshalError( String fileName ) {
-        return UNMARSHAL_ERR + Const.SPACE + fileName;
+    public static String unmarshallerError( String fileName ) {
+        return UNMARSHALLER_ERR + Const.SPACE + fileName;
+    }
+
+    public static Logger getLOG() {
+        return LOG;
+    }
+
+    public static void setLOG( Logger LOG ) {
+        BankRegistryParser.LOG = LOG;
     }
 }

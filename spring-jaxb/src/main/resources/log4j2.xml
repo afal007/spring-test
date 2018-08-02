@@ -5,14 +5,20 @@
     <Console name="STDOUT" target="SYSTEM_OUT">
       <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %marker - %m%n"/>
     </Console>
-    <File name="FILE" fileName="logs/jaxb-app.log">
+    <File name="API" fileName="logs/jaxb-api.log">
+      <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %marker - %m%n"/>
+    </File>
+    <File name="HIB" fileName="logs/jaxb-hib.log">
       <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %marker - %m%n"/>
     </File>
   </Appenders>
 
   <Loggers>
     <Logger name="me.afal.jaxb" level="debug">
-      <AppenderRef ref="FILE"/>
+      <AppenderRef ref="API"/>
+    </Logger>
+    <Logger name="org.hibernate" level="debug">
+      <AppenderRef ref="HIB"/>
     </Logger>
     <Root level="info">
       <AppenderRef ref="STDOUT"/>

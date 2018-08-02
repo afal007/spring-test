@@ -1,4 +1,4 @@
-package me.afal.jaxb;
+package me.afal.jaxb.spring.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

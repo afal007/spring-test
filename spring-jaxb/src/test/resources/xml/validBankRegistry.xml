@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<BankRegistry>
+  <Bank Name="Bank" Active="1" BIC="bic">
+    <SwiftBICs Default="true">swiftBIC1</SwiftBICs>
+    <Country Code="RU">Russia</Country>
+  </Bank>
+</BankRegistry>
