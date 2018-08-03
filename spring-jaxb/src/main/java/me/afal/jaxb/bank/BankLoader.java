@@ -79,4 +79,12 @@ public class BankLoader {
     public void setParser( BankRegistryParser parser ) {
         this.parser = parser;
     }
+
+    public static Logger getLOG() {
+        return LOG;
+    }
+
+    public static void setLOG( Logger LOG ) {
+        BankLoader.LOG = LOG;
+    }
 }
