@@ -20,7 +20,7 @@ class BankRegistryParserTest {
     private static BankRegistryParser parser;
 
     @BeforeAll
-    static void beforeClass() {
+    static void setUp() {
         parser = new BankRegistryParser();
         BankRegistryParser.setLOG( Mockito.mock( Logger.class ) );
     }
