@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group 'me.afal.spring.test'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'com.giffing.wicket.spring.boot.starter', name: 'wicket-spring-boot-starter', version: '2.1.2'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
