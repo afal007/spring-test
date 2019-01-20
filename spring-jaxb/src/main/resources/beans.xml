@@ -45,8 +45,11 @@
 
   <bean class="me.afal.jaxb.bank.parse.BankRegistryParser" id="bankRegistryParser"/>
 
+  <bean class="me.afal.jaxb.bank.BankMapper" id="bankMapper"/>
+
   <bean class="me.afal.jaxb.bank.BankLoader" id="bankLoader">
     <property name="parser" ref="bankRegistryParser"/>
+    <property name="bankMapper" ref="bankMapper"/>
     <property name="bankRepository" ref="bankRepository"/>
   </bean>
 

@@ -22,6 +22,8 @@ public class BankLoader {
     @Log
     private static Logger LOG;
 
+    private BankMapper bankMapper;
+
     private BankRepository bankRepository;
 
     private BankRegistryParser parser;
@@ -36,27 +38,8 @@ public class BankLoader {
             List<BankRegistry.Bank> bankRegistryList = innerBankRegistry.getBankList();
 
             for ( BankRegistry.Bank registryBank : bankRegistryList ) {
-                Bank bank = new Bank();
-
-                List<SwiftBIC> swiftBICList = new ArrayList<>();
-                for ( BankRegistry.Bank.SwiftBICs registrySwiftBIC : registryBank.getSwiftBICs() ) {
-                    SwiftBIC swiftBIC = new SwiftBIC();
-
-                    swiftBIC.setActive      ( registrySwiftBIC.isDefault() );
-                    swiftBIC.setSwiftBIC    ( registrySwiftBIC.getValue() );
-
-                    swiftBICList.add( swiftBIC );
-                }
-
-                bank.setActive      ( registryBank.isActive() );
-                bank.setBIC         ( registryBank.getBIC() );
-                bank.setCountry     ( registryBank.getCountry().getValue() );
-                bank.setCountryCode ( registryBank.getCountry().getCode() );
-                bank.setName        ( registryBank.getName() );
-                bank.setSwiftBICs   ( swiftBICList );
-
+                Bank bank = bankMapper.map( registryBank );
                 bankList.add( bank );
-
                 bankRepository.save( bank );
             }
         } );
@@ -78,6 +61,14 @@ public class BankLoader {
 
     public void setParser( BankRegistryParser parser ) {
         this.parser = parser;
+    }
+
+    public BankMapper getBankMapper() {
+        return bankMapper;
+    }
+
+    public void setBankMapper( BankMapper bankMapper ) {
+        this.bankMapper = bankMapper;
     }
 
     public static Logger getLOG() {

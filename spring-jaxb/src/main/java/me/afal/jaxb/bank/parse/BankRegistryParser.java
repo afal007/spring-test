@@ -12,6 +12,7 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 
 import me.afal.jaxb.Const;
+import me.afal.jaxb.bank.BankMapper;
 import me.afal.jaxb.spring.annotation.Log;
 import me.afal.jaxb.generated.BankRegistry;
 
